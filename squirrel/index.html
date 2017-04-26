@@ -1,0 +1,78 @@
+
+<html> 
+<head>
+	<link type="text/css" Rel="stylesheet" href="main.css" />
+<title>Nuts for Squirrels!</title> 
+<script>	
+	function banner(){ 
+	var text = confirm("Do you really want to go to another website?"); 
+	return text; 
+}
+	function answer(){
+		var radio = document.getElementsByName("trivia");
+		var selection = false;
+		var message = "";
+		for( var i = 0; i < radio.length; i++) {
+			if(radio[i].value == "nas" && radio[i].checked == true) { 
+				selection = true; 
+		} //end if statement 
+	} //end for loop 
+	if(selection == true) {
+	message = message + "<b><p style='color:yellow'>Way to go!</p></b>"; 
+	} else { 
+	message = message + "<b><p style='color:red'>Try again my friend.</p></b>"; 
+	}
+	document.getElementById("response").innerHTML = message;
+} //end function answer
+</script>
+</head> 
+<nav>
+	<ul id="navmenu">
+		<li class="navitem"> <a href="index.html"> Home </a> </li>
+		<li class="navitem"> <a href="pictures.html"> Pictures </a> </li>
+		<li class="navitem"> <a href="games.html"> Games </a> </li>
+	</ul>
+</nav>
+<body id="background"> 
+		<a href="http://www.thesquirrelloversclub.com" onclick="return banner()">
+	<header id="header"> Nuts for Squirrels! </header>
+		</a>
+<h1> Squirrels </h1>
+<p class="paragraph">I <b>love</b> squirrels they are the best! <u>Honestly</u> I dont know a lot about squirrels other than they live in trees, eat nuts, and that some of them have flaps of skin that let them <i>glide</i>.<span class="wrap-text"> Anyways I love squirrels!</span> Btw below are the 3 things I know about squirrels.</p>
+		<div id="leftside">
+<div class="wrap-list">
+<ol>
+	<li class="listitem"> Squirrels live in trees </li>
+	<li class="listitem"> Squirrels eat nuts and seeds </li>
+	<li class="listitem"> Some squirrels have flaps of skin that let them glide</li>
+</ol>
+</div>
+		</div>
+	<div id="rightside">
+<h2> Squirrel Quiz!</h2>
+<p>What do most squirrels eat?</p>
+<form>
+	<div id="response"></div>
+<div class="wrap-trivia">
+	<input type="radio" name="trivia" value="df">Dog food<br>
+	<input type="radio" name="trivia" value="hf">Human flesh<br>
+	<input type="radio" name="trivia" value="nas">Nuts and seeds<br>
+	<input type="radio" name="trivia" value="nota">None of the above<br>
+</div>
+<input type="button" id="submit" value="Submit Answer" onclick="answer()">
+	</div>
+</form>
+	<img src="http://www.slate.com/content/dam/slate/articles/health_and_science/Science/2016/05/160511_SCI_frustrated-squirrel.jpg.CROP.cq5dam_web_1280_1280_jpeg.jpg" />
+	<img src="http://feedingnature.com/wp-content/uploads/2016/02/Squirrels-Rabies.jpg"	/>
+<iframe width="560" height="400" 
+	src="https://www.youtube.com/embed/S6R2I3xnuEM?rel=0" frameborder="0" allowfullscreen>
+</iframe>
+<p> Random horse sound below</p>
+<audio width="400" height="220" controls manualplay>
+<source src="http://www.w3schools.com/tags/horse.mp3" type="audio/mpeg">
+</audio>	
+<hr>
+<center> Quinn <a href="http://www.livescience.com/28182-squirrels.html">My Favorite Website</a> </center>
+	<footer> Quinn is the creator of this amazing website! </footer>
+</body> 
+</html>
