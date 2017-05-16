@@ -1,0 +1,181 @@
+<html>   
+     <head>   
+          <title> Bomb Pong </title>     
+          <script src="https://simplycodingcourses.com/files/simplyjs/simply.js"> </script>     
+          <script>     
+          function start(){   
+               sjs.open("target", 800, 600);   
+               var background = new sjs.Image("Images/space4.png");     
+               background.setSize(800, 600);   
+    
+               var object = new sjs.Image();   
+               object.setSize(5,800);   
+               object.offset(800,0)   
+                  
+               object.type = "wall";     
+               sjs.onHit("ball", "wall", function(x,y){     
+                    window.location="gameover.html";});   
+    
+               var object_left = new sjs.Image();       
+            object_left.setSize(5,800);   
+    
+            object_left.type = "wall";   
+    
+               //Ball Object and Properties   
+               var ball = new sjs.Image("Images/mcol-bomb.png");   
+               ball.type = "ball";   
+               ball.setSize(50,70);   
+               ball.center();   
+               ball.friction = 0;   
+               ball.bounce();   
+               ball.pushRight(3);   
+               ball.pushUp(4);   
+    
+               sjs.onHit("ball","score", function(x,y){     
+                    score = score + 1;     
+                    score_txt.setText("Score: "+score);     
+                    localStorage.setItem("score", score);     
+                    if(score > 9) {     
+                         window.location="win.html"       
+                    }     
+                    y.destroy();   
+               });   
+    
+               //Paddle 1   
+               var paddle1 = new sjs.Image("Images/green.png");   
+               paddle1.type = "paddle";   
+               paddle1.centerH();   
+               paddle1.setSize(100,20);   
+    
+               //Paddle 2   
+               var paddle2 = new sjs.Image("Images/red.png");   
+               paddle2.type = "paddle";   
+               paddle2.center().bottom();   
+               paddle2.setSize(100,20);   
+    
+               //Paddle 3   
+               var paddle3 = new sjs.Image("Images/blue.png");   
+               paddle3.type = "paddle";   
+               paddle3.center().left();   
+               paddle3.setSize(20,100);   
+    
+               //Paddle 4   
+               var paddle4 = new sjs.Image("Images/blue.png");   
+               paddle4.type = "paddle";   
+               paddle4.center().right();   
+               paddle4.setSize(20,100);   
+                  
+               //Score   
+               setInterval(function(){   
+                    var speed = Math.floor(1 + Math.random()*10);     
+                    if(Math.random() > 0.5){     
+                         var score = new sjs.Image("Images/mcol-bomb.png");   
+                         score.type = "score";   
+                         score.setSize(20,30);   
+                         score.noBounds = true;   
+                         score.friction = 0;   
+                         score.pushRight(speed);   
+                         score.moveTo(-score.getWidth(),     
+                         Math.random()*(score.getClamp().y));   
+                         object.node.style.zIndex = '-100'     
+                    }   
+                    else {   
+                         var score = new sjs.Image("Images/mcol-bomb.png");   
+                         score.type = "score";   
+                         score.setSize(20,30);   
+                         score.noBounds = true;   
+                         score.friction = 0;         
+                         score.pushLeft(speed);     
+                         score.scaleSize(.5 + Math.random() * 1.2);   
+                         score.moveTo(sjs.getWidth(), Math.random()*(score.getClamp().y));   
+                         object.node.style.zIndex = '-100'     
+                    }   
+               },1000);   
+    
+               sjs.onHit("player","score", function(x,y){       
+                    score = score + 1;       
+                    score_txt.setText("Score: "+score);       
+                    localStorage.setItem("score", score);       
+                    if(score > 9) {       
+                         window.location="win.html"         
+                    }       
+                    y.destroy();         
+                });   
+    
+               sjs.left_screen.offset(-500);   
+               sjs.right_screen.offset(500);   
+    
+               sjs.onHit("score",["right_screen","left_screen"], function(x,y){   
+                    x.destroy();     
+               });   
+    
+               var score = 0;   
+               var score_txt = new sjs.Text("Score: 0", 21, "orange");   
+    
+               //Sounds   
+               var soundEffect = new Audio('Music/techno.mp3');
+
+               var playM = new Audio('Music/mad_robots.mp3'); 
+               var musicOn = false;
+               var toggle = true; 
+
+               sjs.keyDown(SPACE_KEY, function(){
+                    if(toggle == true){
+                         if(musicOn == false){
+                              playM.play();
+                              musicOn = true;
+                         } else {
+                              playM.pause();
+                              musicOn = false;
+                         }
+                              toggle = false;
+                              setTimeout(function(){
+                              toggle = true;
+                         },1000);
+                    } //end if toggle statement
+               }); //end keyDown function   
+    
+               //Gameover   
+               sjs.onHit("ball",["top_screen","bottom_screen"], function(){   
+                    window.location = "gameover.html";   
+               });   
+    
+               sjs.onHit("ball",["left_screen","right_screen"], function(){   
+                    window.location = "gameover.html";   
+               });   
+    
+               //Paddle Controls   
+               sjs.keyDown(LEFT_KEY, function(){   
+                    paddle1.pushLeft();   
+                    paddle2.pushLeft();   
+               });   
+    
+               sjs.keyDown(RIGHT_KEY, function(){   
+                    paddle1.pushRight();   
+                    paddle2.pushRight();   
+               });   
+    
+               sjs.keyDown(UP_KEY, function(){   
+                    paddle3.pushUp();   
+                    paddle4.pushUp();   
+               });   
+    
+               sjs.keyDown(DOWN_KEY, function(){   
+                    paddle3.pushDown();   
+                    paddle4.pushDown();   
+               });   
+    
+               //Onhit   
+               sjs.onHit("ball","paddle", function(ball,paddle){   
+                    soundEffect.play();   
+                    sjs.bounceOff(ball,paddle);   
+               });   
+    
+          } //end start   
+          </script>     
+     </head>     
+     <body onload="start()">     
+          <h1> Bomb Pong </h1>     
+          <div id="target" style="margin:auto;background:grey;"></div>     
+     </body>     
+</html>
